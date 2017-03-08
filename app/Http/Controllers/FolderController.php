@@ -13,7 +13,7 @@ class FolderController extends Controller
     }
     public function fetchFolder(Request $request){
     	$id=1;
-    	$check_lock= Folder::select(['sh_name','lock','path'])
+    	$check_lock= Folder::select(['id','sh_name','lock','path'])
     	->where([['user_id','=',$id],['sh_name','=',$request->folder_name],['hide','=',0]])->first();
     	if($check_lock->lock===1){
     			return "This folder is locked";
@@ -21,5 +21,17 @@ class FolderController extends Controller
     	$child= Folder::where([['user_id','=',$id],['parent_id','=',$request->id],['hide','=',0]])->get();
     	return array('map'=>$check_lock,'folders'=>$child);
     }    
+
+    public function map($folder_path=null){
+
+        $id=1;
+         if($folder_path) 
+        {
+          $check_lock= Folder::select(['id','sh_name','lock','path'])
+         ->where([['user_id','=',$id],['path','=',$folder_path],['hide','=',0]])->first();
+         $path= Folder::where([['user_id','=',$id],['parent_id','=',$check_lock->id],['hide','=',0]])->get();
+        return array('map'=>$check_lock,'folders'=>$path);
+        }
+    }
     
 }

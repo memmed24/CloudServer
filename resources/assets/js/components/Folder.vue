@@ -1,6 +1,6 @@
 <template>
 <div>	
-		<folder-map :path="path"></folder-map>
+		<folder-map :path="path" :id="folder_id" :name="folder_shname" :fullpath="full_path" v-on:find="goMap"></folder-map>
 	<div class="right_side_down">
 	<div class="folder_s">
 		<div class="header"><span class="folder_ty">Folders</span></div>
@@ -43,17 +43,23 @@ import FolderMap from './FolderMap.vue'
 				folder_name:this.$route.params.folder_name,
 				path:[],
 				preloader:true,
+				folder_id:'',
+				folder_shname:'',
+				full_path:'',
 			}
 		},
 		methods:{
 			fetchFolder(){
-				this.$http.get('/api/folder/'+this.id+'/'+this.folder_name).then((res)=>{
+				this.$http.get('/api/folder/'+this.$route.params.id+'/'+this.$route.params.folder_name).then((res)=>{
 					this.preloader=true;					
 					var folderMap =[];	
 					this.path=res.data.map.path;
+					this.full_path=res.data.map.path;
 					folderMap=this.path.split("/");
 					this.path=folderMap;					
 					this.folders=res.data.folders;
+					this.folder_id=res.data.map.id;
+					this.folder_shname=res.data.map.sh_name;
 					this.preloader=false;
 
 				})
@@ -61,29 +67,48 @@ import FolderMap from './FolderMap.vue'
 			getInfo(item){
 				//this.info=item;
 			},
+			goMap(re,id,name){
+				this.$http.get('/api/folders/map/'+re).then((res)=>{
+					this.preloader=true;					
+					var folderMap =[];	
+					this.path=res.data.map.path;
+					this.full_path=res.data.map.path;
+					folderMap=this.path.split("/");
+					this.path=folderMap;					
+					this.folders=res.data.folders;
+					this.folder_id=res.data.map.id;
+					this.folder_shname=res.data.map.sh_name;
+					this.preloader=false;
+					this.$router.push('/folder/'+this.folder_id+"/"+this.folder_shname);
+				})
+			},
 			inFolder(lock,id,name){
+				
 				if(lock===1){
 					return false;
 				}
 				this.$router.push('/folder/'+id+"/"+name);
-				this.$http.get('/api/folder/'+id+'/'+name).then((res)=>{	
-					this.preloader=true;				
-					var folderMap =[];	
-					this.path=res.data.map.path;
-					folderMap=this.path.split("/");
-					this.path=folderMap;					
-					this.folders=res.data.folders;
-					this.preloader=false;
-				})
+				// this.$http.get('/api/folder/'+id+'/'+name).then((res)=>{	
+				// 	this.preloader=true;				
+				// 	var folderMap =[];	
+				// 	this.path=res.data.map.path;
+				// 	folderMap=this.path.split("/");
+				// 	this.path=folderMap;					
+				// 	this.folders=res.data.folders;
+				// 	this.preloader=false;
+				// 	this.count=1;
+				// })
 				//this.fetchFolder();
 				
 			}
 		},
 		watch:{
-			//$route:'fetchFolder',
+			$route:'fetchFolder',
 		},
 		created(){
-			this.fetchFolder()
+			
+				this.fetchFolder()
+			
 		},
 		components:{
 			FolderMap

@@ -20,3 +20,5 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/my-drive', 'FolderController@drive');
 Route::get('/folder/{id}/{folder_name}', 'FolderController@fetchFolder');
+Route::get('/folders/map/{folders?}', 'FolderController@map')->where('folders', '(.*)');
+//Route::get('/folders/map/{request}', 'FolderController@map');

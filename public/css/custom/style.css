@@ -7845,7 +7845,10 @@ button.close {
       #right_side .folder_map .folder_strck li:hover {
         border-color: #c2c6c9; }
       #right_side .folder_map .folder_strck li:last-child {
-        font-weight: bold; }
+        font-weight: bold;
+        cursor: default; }
+      #right_side .folder_map .folder_strck li:last-child:hover {
+        border: 1px solid #f7f5f6; }
     #right_side .folder_map .ff_act_m {
       margin-right: 80px; }
     #right_side .folder_map .ff_act {
