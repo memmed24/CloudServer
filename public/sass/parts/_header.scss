@@ -1,0 +1,42 @@
+#header{
+		position: fixed;
+		z-index: 3;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		background:$blueColor;
+	    width: 100%;
+	    box-shadow: 0 0 8px 0px;
+    .logo{
+    	font-size: 40px;
+    	color: white;
+    	line-height: 0;
+    }
+    .search_filed{
+	    input{
+		    border: none;
+		    background: none;
+		    border-bottom: 1px solid white;
+		    outline: none;
+		    color: white;
+		    padding-left: 18px;
+		    padding-top: 8px;
+		   // font-size: 16px;
+		    font-family: $roboto;
+		    font-weight: 100;
+	    }
+	    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+		    color: white;
+		    font-family: $roboto;
+		    //font-weight: 100;
+		}
+	    .search_btn{
+	    	top: 8px;
+		    position: absolute;
+		    color: white;
+		    a{
+		    	color:white;
+		    }
+	    }
+	}
+
+}

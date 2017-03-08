@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+
+Route::get('/my-drive', 'FolderController@drive');
+Route::get('/folder/{id}/{folder_name}', 'FolderController@fetchFolder');

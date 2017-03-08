@@ -4,7 +4,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <script>
+            window.Laravel = { csrfToken: '{{ csrf_token() }}' };
+        </script>
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -65,7 +67,7 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div id="app" class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
@@ -93,3 +95,4 @@
         </div>
     </body>
 </html>
+<script src="js/app.js"></script>

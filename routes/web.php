@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/drive', function () {
+	//return redirect("/drive#/my-drive");
+    return view('clientSide/mydrive');
+});
