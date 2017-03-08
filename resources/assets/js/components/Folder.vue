@@ -12,7 +12,7 @@
 					</div>
 		<div class="empty_folder" v-if="!folders.length">
 			<img src="empty_folder.png">
-			<div><span class="empty_folder_text">This folder is empty</span></div>
+			<div><span class="empty_folder_text">{{errmsg}}</span></div>
 		</div>
 		<!-- data-toggle="modal" data-target="#lock" -->
 			<div  v-for="folder in folders" class="item" @click="getInfo(folder)"   @dblclick="inFolder(folder.lock,folder.id,folder.sh_name)">
@@ -46,6 +46,7 @@ import FolderMap from './FolderMap.vue'
 				folder_id:'',
 				folder_shname:'',
 				full_path:'',
+				errmsg:'This folder is empty'
 			}
 		},
 		methods:{
@@ -62,7 +63,10 @@ import FolderMap from './FolderMap.vue'
 					this.folder_shname=res.data.map.sh_name;
 					this.preloader=false;
 
-				})
+				},response => {
+    			this.preloader=false;
+    			this.errmsg='This folder doesn’t exist.';
+  				});
 			},
 			getInfo(item){
 				//this.info=item;

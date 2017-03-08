@@ -11,6 +11,7 @@
 		width:100%;
 		background: #f7f5f6;
 		box-shadow: 0 0 8px 0px;
+		
 		.dropdown-menu{
 			left: 14px;
 			padding: 0;
@@ -55,6 +56,10 @@
 		li:last-child{
 		   font-weight: bold;
 		   cursor:default;
+
+		   span{
+		   	display:none;
+		   }
 		}
 		li:last-child:hover{border: 1px solid #f7f5f6;}
 	}

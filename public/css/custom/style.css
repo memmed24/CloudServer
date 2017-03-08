@@ -7847,6 +7847,8 @@ button.close {
       #right_side .folder_map .folder_strck li:last-child {
         font-weight: bold;
         cursor: default; }
+        #right_side .folder_map .folder_strck li:last-child span {
+          display: none; }
       #right_side .folder_map .folder_strck li:last-child:hover {
         border: 1px solid #f7f5f6; }
     #right_side .folder_map .ff_act_m {

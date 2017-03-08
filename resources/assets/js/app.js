@@ -46,8 +46,9 @@ const app = new Vue({
 });
 
 // $(function () {
-//     $(this).bind('contextmenu rightclick', function(e){
-//         e.preventDefault();
-//         console.log(e)
-//     });
+//     // $(this).bind('contextmenu rightclick', function(e){
+//     //     e.preventDefault();
+//     //     console.log(e)
+//     // });
+
 // });
