@@ -18,7 +18,7 @@
 			<li class="ff_act " data-toggle="modal" data-target="#myModal">
 				<i class="fa fa-info-circle" aria-hidden="true"></i>
 			</li>
-			<li class="ff_act"><i class="fa fa-trash" aria-hidden="true"></i></li>
+			<li v-if="ready_delete" @click="deleteItem(item)" class="ff_act"><i class="fa fa-trash" aria-hidden="true"></i></li>
 			<li  data-toggle="dropdown" class="ff_act dropdown-toggle"><i class="fa fa-bars" aria-hidden="true"></i>
 			</li>
 			<ul class="dropdown-menu">
@@ -39,6 +39,7 @@
 </div>
 </template>
 <script>
+import store from '../store'
 	export default{
 		// props{
 		//     path: {
@@ -46,15 +47,21 @@
 		//       //required: true
 		//     },			
 		// }
-		props:['path','id','name','fullpath'],
+		props:['path','id','name','fullpath','item'],
 		data(){
 			return{
-				catch:'asassas'
+				catch:'asassas',
+				delete_item:[],
+				sharedState: store.state,
 			}
 		},
 		methods:{
-			getInfo(item){
-				this.info=item;
+			deleteItem(item){
+				this.$http.post('/api/folder/delete',item).then((res)=>{
+					this.$emit('deleteEmit',item);
+				},(error)=>{
+					console.log(error.status);
+				})
 			},
 			// inFolder(id,name){
 			// 	this.$router.push('/folder/'+id+'/'+name);
@@ -70,6 +77,16 @@
 				this.$emit('find',folderMap);
 				//
 
+			}
+		},
+		computed:{
+			ready_delete(){
+				// /return true;
+				if(this.item.length){
+					return true;
+				}else{
+					return false;
+				}
 			}
 		},
 		created(){

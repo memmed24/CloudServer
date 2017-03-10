@@ -160,6 +160,7 @@
 
 		
 	}
+
 }
 
 .loader {
@@ -180,3 +181,8 @@
     transform: rotate(100deg); }
   100% {
     transform: rotate(460deg); } }
+    .selected{
+		background:$select!important;
+		.f_name{color:white !important;}
+		
+	}

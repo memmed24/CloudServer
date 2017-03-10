@@ -7,7 +7,7 @@
 	 <script>window.Laravel = { csrfToken: '{{ csrf_token() }}' };</script>
 </head>
 <body>
-	<div id="app">
+	<div id="app" @click="oka($event)">
 		@yield('content')
 	</div>
 </body>

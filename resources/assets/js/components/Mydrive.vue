@@ -1,7 +1,7 @@
 <template>
 <div>
 
-<folder-map></folder-map>
+<!-- <folder-map></folder-map> -->
 <div class="right_side_down">
 	<div class="folder_s">
 		<div class="header"><span class="folder_ty">Folders</span></div>

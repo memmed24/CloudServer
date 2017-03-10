@@ -1,6 +1,10 @@
 <template>
 <div>	
-		<folder-map :path="path" :id="folder_id" :name="folder_shname" :fullpath="full_path" v-on:find="goMap"></folder-map>
+		<folder-map 
+		:path="path" :id="folder_id"
+		:name="folder_shname" :fullpath="full_path"
+		v-on:find="goMap" :item="selected" v-on:deleteEmit="deleteItem">		  	
+		  </folder-map>
 	<div class="right_side_down">
 	<div class="folder_s">
 		<div class="header"><span class="folder_ty">Folders</span></div>
@@ -15,13 +19,15 @@
 			<div><span class="empty_folder_text">{{errmsg}}</span></div>
 		</div>
 		<!-- data-toggle="modal" data-target="#lock" -->
-			<div  v-for="folder in folders" class="item" @click="getInfo(folder)"   @dblclick="inFolder(folder.lock,folder.id,folder.sh_name)">
+			<div  v-for="(folder , index) in folders" class="item"
+			   @click="getInfo(folder,$event,index)" 
+			   @dblclick="inFolder(folder.lock,folder.id,folder.sh_name)">
 				<div class="folder_bg">
 					<div v-if="folder.lock!=0" class="locked"><i class="fa fa-lock" aria-hidden="true"></i></div>
-					<img src="folder.png">
+					<img class="f_img" src="folder.png">
 				</div>
 				<div class="item_name text-center">
-					<span>{{folder.name}}</span><!---10 herf-->
+					<span class="f_name">{{folder.name}} {{checkItem}}</span><!---10 herf-->
 				</div>
 			</div>
 
@@ -30,15 +36,18 @@
 		
 	</div>
 	</div>
+	
 </div>
 </template>
 <script>
 import FolderMap from './FolderMap.vue'
+import store from '../store'
 	export default{
 		data(){
 			return{
 				folders:{},
 				info:[],
+				selected:[],
 				id:this.$route.params.id,
 				folder_name:this.$route.params.folder_name,
 				path:[],
@@ -46,7 +55,9 @@ import FolderMap from './FolderMap.vue'
 				folder_id:'',
 				folder_shname:'',
 				full_path:'',
-				errmsg:'This folder is empty'
+				errmsg:'This folder is empty',
+				sharedState: store.state,
+				//count:0,
 			}
 		},
 		methods:{
@@ -68,8 +79,20 @@ import FolderMap from './FolderMap.vue'
     			this.errmsg='This folder doesn’t exist.';
   				});
 			},
-			getInfo(item){
-				//this.info=item;
+			getInfo(item,e,index){
+				this.info=item;
+				if(!e.ctrlKey){
+				   this.selected=[]
+				}
+				if(!this.selected.includes(item)){
+					 		 this.selected.push(item);
+					 }else{
+					 	for(var i=0;i<this.selected.length;i++){					 		
+					 		if(item.sh_name==this.selected[i].sh_name){
+					 			this.selected.splice(i, 1)
+					 		}
+					 	}
+					 }
 			},
 			goMap(re,id,name){
 				this.$http.get('/api/folders/map/'+re).then((res)=>{
@@ -85,6 +108,18 @@ import FolderMap from './FolderMap.vue'
 					this.preloader=false;
 					this.$router.push('/folder/'+this.folder_id+"/"+this.folder_shname);
 				})
+			},
+			deleteItem(item, index){
+				//console.log(item)
+				for(var i=0; i<item.length; i++){
+					for(var b=0; b<this.folders.length; b++){
+						if(item[i].sh_name==this.folders[b].sh_name){
+							this.folders.splice(b,1);
+						}
+					}
+				  
+				}
+
 			},
 			inFolder(lock,id,name){
 				
@@ -104,7 +139,22 @@ import FolderMap from './FolderMap.vue'
 				// })
 				//this.fetchFolder();
 				
-			}
+			},
+		style(e){
+			 $('.'+e.target.className+'').css({'background':'red'});
+		}
+		},
+		computed:{
+		  checkItem(){
+		  	if(this.sharedState.itemOut){
+		  		this.selected=[]
+		  	}
+		  },
+		  // deleteItem(){
+		  // 	if(this.sharedState.deleteSuc){
+		  // 		this.fetchFolder();
+		  // 	}
+		  // }
 		},
 		watch:{
 			$route:'fetchFolder',

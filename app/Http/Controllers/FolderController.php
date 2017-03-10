@@ -33,5 +33,15 @@ class FolderController extends Controller
         return array('map'=>$check_lock,'folders'=>$path);
         }
     }
+    public function deletefolder(Request $request){
+          $id=1;
+           return "ok";
+        foreach ($request->all() as $key => $value) {
+           
+           Folder::where([['user_id','=',$id],['parent_id','=',$value['parent_id']],['sh_name','=',$value['sh_name']]])->delete();
+          
+          
+        }
+    }
     
 }

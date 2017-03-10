@@ -7951,5 +7951,9 @@ button.close {
     transform: rotate(100deg); }
   100% {
     transform: rotate(460deg); } }
+.selected {
+  background: #19576e !important; }
+  .selected .f_name {
+    color: white !important; }
 
 /*# sourceMappingURL=style.css.map */
