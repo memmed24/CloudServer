@@ -110,8 +110,8 @@ import store from '../store'
 				})
 			},
 			deleteItem(item, index){
-				//console.log(item)
-				for(var i=0; i<item.length; i++){
+				this.$http.post('/api/folder/delete',item).then((res)=>{
+					for(var i=0; i<item.length; i++){
 					for(var b=0; b<this.folders.length; b++){
 						if(item[i].sh_name==this.folders[b].sh_name){
 							this.folders.splice(b,1);
@@ -119,6 +119,11 @@ import store from '../store'
 					}
 				  
 				}
+				},(error)=>{
+					console.log(error.status);
+				})
+				//console.log(item)
+				
 
 			},
 			inFolder(lock,id,name){

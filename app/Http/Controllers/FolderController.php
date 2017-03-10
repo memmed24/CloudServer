@@ -35,7 +35,7 @@ class FolderController extends Controller
     }
     public function deletefolder(Request $request){
           $id=1;
-           return "ok";
+           //return "ok";
         foreach ($request->all() as $key => $value) {
            
            Folder::where([['user_id','=',$id],['parent_id','=',$value['parent_id']],['sh_name','=',$value['sh_name']]])->delete();
