@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/drive', function () {
 	//return redirect("/drive#/my-drive");
-    return view('clientSide/mydrive');
+    // return view('clientSide/mydrive');
 });
 
 Route::get('test/{otherLinks?}', 'FolderController@getPage')->where('otherLinks', '(.*)');
